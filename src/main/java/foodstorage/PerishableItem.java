@@ -19,4 +19,49 @@ public abstract class PerishableItem {
     protected double weightInGrams;
     protected LocalDate bestBeforeDate;
     protected LocalDateTime dateAdded;
+
+    /**
+     * Constructs a new PerishableItem with data validation.
+     */
+    public PerishableItem(String name, double weightInGrams, LocalDate bestBeforeDate)
+            throws InvalidFoodDataException {
+
+        if (name == null || name.trim().isEmpty()) {
+            throw new InvalidFoodDataException("Food name cannot be empty.");
+        }
+        if (weightInGrams <= 0) {
+            throw new InvalidFoodDataException("Weight must be greater than 0 grams.");
+        }
+
+        LocalDate today = LocalDate.now();
+        LocalDate maxAllowedDate = today.plusDays(MAX_SHELF_LIFE_DAYS);
+        if (bestBeforeDate == null || bestBeforeDate.isBefore(today) || bestBeforeDate.isAfter(maxAllowedDate)) {
+            throw new InvalidFoodDataException(
+                    "Best-before date must be between today and " + MAX_SHELF_LIFE_DAYS + " days from today.");
+        }
+
+        this.name = name.trim();
+        this.weightInGrams = weightInGrams;
+        this.bestBeforeDate = bestBeforeDate;
+        this.dateAdded = LocalDateTime.now();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getWeightInGrams() {
+        return weightInGrams;
+    }
+
+    public LocalDate getBestBeforeDate() {
+        return bestBeforeDate;
+    }
+
+    public LocalDateTime getDateAdded() {
+        return dateAdded;
+    }
+
+    // Returns the specific category of the perishable item
+    public abstract String getCategory();
 }
