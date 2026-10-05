@@ -15,6 +15,16 @@ public class FoodItem extends PerishableItem {
     private static final DateTimeFormatter TIME_FORMAT =
             DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
+    /**
+     * Creates a new food item. All the validation is already done by
+     * the parent class constructor (PerishableItem).
+     *
+     * @param name            the item's name, cannot be null/empty
+     * @param weightInGrams   the item's weight in grams, must be > 0
+     * @param bestBeforeDate  must be between today and 14 days from today
+     * @throws InvalidFoodDataException if any of the fields above is invalid
+     */
+
     public FoodItem(String name, double weightInGrams, LocalDate bestBeforeDate)
             throws InvalidFoodDataException {
         super(name, weightInGrams, bestBeforeDate);
@@ -25,6 +35,7 @@ public class FoodItem extends PerishableItem {
         return "Fast Food Item";
     }
 
+    /** @return a readable summary of the item, used by displayAll() */
     @Override
     public String toString() {
         return name + " - " + weightInGrams + "g"
