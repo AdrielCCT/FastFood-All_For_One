@@ -1,5 +1,4 @@
 package foodstorage;
-
 import java.util.Scanner;
 
 public class FoodStorageApp {
