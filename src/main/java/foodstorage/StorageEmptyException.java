@@ -6,6 +6,10 @@ package foodstorage;
  */
 public class StorageEmptyException extends Exception {
 
+    /**
+     * @param message explains that there were no trays to remove/peek
+     */
+
     public StorageEmptyException(String message) {
         super(message);
     }

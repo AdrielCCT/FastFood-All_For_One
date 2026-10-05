@@ -6,6 +6,10 @@ package foodstorage;
  */
 public class StorageFullException extends Exception {
 
+    /**
+     * @param message explains that the 8-tray limit was reached
+     */
+
     public StorageFullException(String message) {
         super(message);
     }
