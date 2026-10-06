@@ -1,24 +1,30 @@
 package foodstorage;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class FoodStorageApp {
 
     private static Scanner scanner = new Scanner(System.in);
     //Connect FoodStorage when the class is ready
-    private static FoodStorage storage = new FoodStorage;
+    private static FoodStorage storage = new FoodStorage();
 
     public static void main(String[] args) {
         boolean running = true;
 
         System.out.println("Fast Food Storage - CA1 (Deque)");
 
+//main manu looping
         while (running) {
             showMenu();
             String choice = scanner.nextLine().trim();
 
             switch (choice) {
                 case "1":
+                    addItem(true); //add to front
+                    break;
                 case "2":
+                    addItem(false); //add to back
+                    break;
                 case "3":
                 case "4":
                 case "5":
@@ -38,6 +44,7 @@ public class FoodStorageApp {
         scanner.close();
     }
 
+    //print the available options to the terminal
     private static void showMenu() {
         System.out.println("\nSelect an option:");
         System.out.println("1 - Add food to front");
@@ -49,5 +56,39 @@ public class FoodStorageApp {
         System.out.println("7 - Show all items");
         System.out.println("0 - Exit");
         System.out.print("Your choice: ");
+    }
+
+    //reads the food details from the terminal and adds it to the front or back of the  storage
+    private static void addItem(boolean addToFront) {
+        try {
+            System.out.print("Food name (Burger, Pizza, Fries, etc): ");
+            String name = scanner.nextLine().trim();
+
+            System.out.print("Weight (grams): ");
+            double weight = Double.parseDouble(scanner.nextLine().trim());
+
+            System.out.print("Days until expiration (0 to 14): ");
+            int days = Integer.parseInt(scanner.nextLine().trim());
+            //calculates the expiry date from today's date
+            LocalDate expiryDate = LocalDate.now().plusDays(days);
+
+            //create new FoodItem object
+            FoodItem item = new FoodItem(name, weight, expiryDate);
+
+
+          //where to insert the item
+            if (addToFront) {
+                storage.addFront(item);
+            } else {
+                storage.addBack(item);
+            }
+
+            System.out.println("Success ! Item was added to storage.");
+
+        } catch (NumberFormatException e) {
+            System.out.println("Error: Weight and days must be valid numbers.");
+        } catch (InvalidFoodDataException | StorageFullException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 }
