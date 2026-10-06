@@ -6,6 +6,10 @@ package foodstorage;
  */
 public class InvalidFoodDataException extends Exception {
 
+    /**
+     * @param message explains exactly which field was invalid and why
+     */
+
     public InvalidFoodDataException(String message) {
         super(message);
     }
