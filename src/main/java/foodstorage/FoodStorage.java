@@ -45,12 +45,42 @@ public class FoodStorage implements StorageOperations {
 
     @Override
     public void addFront(FoodItem item) throws StorageFullException {
-        // TODO
+        // first, check if there is space. If not, stop and throw the exception
+        if (isFull()) {
+            throw new StorageFullException("Storage is full! Maximum of " + MAX_CAPACITY + " trays reached.");
+        }
+        // create the new node that will keep the tray
+        Node newNode = new Node(item);
+        if (isEmpty()) {
+            // first tray: the new node is the front and the back at the same time
+            front = newNode;
+            back = newNode;
+        } else {
+            newNode.next = front;  // the new node points to the old front
+            front.prev = newNode;  // the old front points back to the new node
+            front = newNode;       // now the new node is the front
+        }
+        count++; // one more tray in the storage
     }
 
     @Override
     public void addBack(FoodItem item) throws StorageFullException {
-        // TODO
+        // first, check if there is space. If not, stop and throw the exception
+        if (isFull()) {
+            throw new StorageFullException("Storage is full! Maximum of " + MAX_CAPACITY + " trays reached.");
+        }
+        // create the new node that will keep the tray
+        Node newNode = new Node(item);
+        if (isEmpty()) {
+            // first tray: the new node is the front and the back at the same time
+            front = newNode;
+            back = newNode;
+        } else {
+            newNode.prev = back;  // the new node points to the old back
+            back.next = newNode;  // the old back points forward to the new node
+            back = newNode;       // now the new node is the back
+        }
+        count++; // one more tray in the storage
     }
 
     @Override
