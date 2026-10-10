@@ -85,14 +85,38 @@ public class FoodStorage implements StorageOperations {
 
     @Override
     public FoodItem removeFront() throws StorageEmptyException {
-        // TODO
-        return null;
+        // we can not remove anything from an empty storage
+        if (isEmpty()) {
+            throw new StorageEmptyException("Storage is empty! There is nothing to remove.");
+        }
+        // save the tray first, because we need to return it at the end
+        FoodItem removed = front.data;
+        front = front.next;  // the second node becomes the new front
+        if (front != null) {
+            front.prev = null;  // the new front must not point back to the old one
+        } else {
+            back = null; // storage became empty
+        }
+        count--; // one less tray in the storage
+        return removed;
     }
 
     @Override
     public FoodItem removeBack() throws StorageEmptyException {
-        // TODO
-        return null;
+        // we can not remove anything from an empty storage
+        if (isEmpty()) {
+            throw new StorageEmptyException("Storage is empty! There is nothing to remove.");
+        }
+        // save the tray first, because we need to return it at the end
+        FoodItem removed = back.data;
+        back = back.prev;  // the node before the back becomes the new back
+        if (back != null) {
+            back.next = null;  // the new back must not point forward to the old one
+        } else {
+            front = null; // storage became empty
+        }
+        count--; // one less tray in the storage
+        return removed;
     }
 
     @Override
