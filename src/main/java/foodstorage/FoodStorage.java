@@ -121,19 +121,41 @@ public class FoodStorage implements StorageOperations {
 
     @Override
     public FoodItem peekFront() throws StorageEmptyException {
-        // TODO
-        return null;
+        // there is no front tray if the storage is empty
+        if (isEmpty()) {
+            throw new StorageEmptyException("Storage is empty! There is nothing at the front.");
+        }
+        // only return the tray, we do not remove it from the list
+        return front.data;
     }
 
     @Override
     public FoodItem searchByName(String name) {
-        // TODO
-        return null;
+        // start at the front and walk to the back, one node at a time
+        Node current = front;
+        while (current != null) {
+            if (current.data.getName().equalsIgnoreCase(name)) {
+                return current.data;  // found it, so we can stop
+            }
+            current = current.next;  // go to the next node
+        }
+        return null; // we checked all the trays and did not find the name
     }
 
     @Override
     public void displayAll() {
-        // TODO
+        if (isEmpty()) {
+            System.out.println("The storage is empty. No trays to show.");
+            return;
+        }
+        System.out.println("---- Trays currently in storage (front -> back) ----");
+        Node current = front;
+        int position = 1;  // used to number the trays: 1, 2, 3...
+        while (current != null) {
+            System.out.println(position + ". " + current.data);
+            current = current.next;  // go to the next node
+            position++;
+        }
     }
 
     // The storage is empty when we have zero trays
