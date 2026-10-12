@@ -43,6 +43,7 @@ public class FoodStorage implements StorageOperations {
         count = 0;
     }
 
+    // O(1) - just creates a node and links it before the current front
     @Override
     public void addFront(FoodItem item) throws StorageFullException {
         // first, check if there is space. If not, stop and throw the exception
@@ -63,6 +64,7 @@ public class FoodStorage implements StorageOperations {
         count++; // one more tray in the storage
     }
 
+    // O(1) - just creates a node and links it after the current back
     @Override
     public void addBack(FoodItem item) throws StorageFullException {
         // first, check if there is space. If not, stop and throw the exception
@@ -83,6 +85,7 @@ public class FoodStorage implements StorageOperations {
         count++; // one more tray in the storage
     }
 
+    // O(1) - only moves the front pointer, no need to walk the list
     @Override
     public FoodItem removeFront() throws StorageEmptyException {
         // we can not remove anything from an empty storage
@@ -101,6 +104,7 @@ public class FoodStorage implements StorageOperations {
         return removed;
     }
 
+    // O(1) - only moves the back pointer, no need to walk the list
     @Override
     public FoodItem removeBack() throws StorageEmptyException {
         // we can not remove anything from an empty storage
@@ -119,6 +123,7 @@ public class FoodStorage implements StorageOperations {
         return removed;
     }
 
+    // O(1) - just reads the front node, does not remove it
     @Override
     public FoodItem peekFront() throws StorageEmptyException {
         // there is no front tray if the storage is empty
@@ -129,6 +134,7 @@ public class FoodStorage implements StorageOperations {
         return front.data;
     }
 
+    // O(n) worst case - may need to check every tray until it finds a match
     @Override
     public FoodItem searchByName(String name) {
         // start at the front and walk to the back, one node at a time
@@ -142,6 +148,7 @@ public class FoodStorage implements StorageOperations {
         return null; // we checked all the trays and did not find the name
     }
 
+    // O(n) - has to print every tray, from front to back
     @Override
     public void displayAll() {
         if (isEmpty()) {
