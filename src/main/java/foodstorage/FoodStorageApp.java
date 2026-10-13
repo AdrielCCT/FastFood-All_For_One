@@ -13,22 +13,30 @@ public class FoodStorageApp {
 
         System.out.println("Fast Food Storage - CA1 (Deque)");
 
-//main manu looping
+        //main menu looping
         while (running) {
             showMenu();
             String choice = scanner.nextLine().trim();
 
             switch (choice) {
                 case "1":
-                    addItem(true); //add to front
+                    addItem(true); // add to front
                     break;
                 case "2":
-                    addItem(false); //add to back
+                    addItem(false); // add to back
                     break;
                 case "3":
+                    removeFront();
+                    break;
                 case "4":
+                    removeBack();
+                    break;
                 case "5":
+                    peekFront();
+                    break;
                 case "6":
+                    search();
+                    break;
                 case "7":
                     System.out.println("Option " + choice + " is not ready yet");
                     break;
@@ -58,7 +66,7 @@ public class FoodStorageApp {
         System.out.print("Your choice: ");
     }
 
-    //reads the food details from the terminal and adds it to the front or back of the  storage
+    //reads the food details from the terminal and adds it to the front or back of the storage
     private static void addItem(boolean addToFront) {
         try {
             System.out.print("Food name (Burger, Pizza, Fries, etc): ");
@@ -75,8 +83,7 @@ public class FoodStorageApp {
             //create new FoodItem object
             FoodItem item = new FoodItem(name, weight, expiryDate);
 
-
-          //where to insert the item
+            //where to insert the item
             if (addToFront) {
                 storage.addFront(item);
             } else {
@@ -89,6 +96,49 @@ public class FoodStorageApp {
             System.out.println("Error: Weight and days must be valid numbers.");
         } catch (InvalidFoodDataException | StorageFullException e) {
             System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    // removes the item from the front of the storage
+    private static void removeFront() {
+        try {
+            FoodItem removed = storage.removeFront();
+            System.out.println("Removed from front: " + removed);
+        } catch (StorageEmptyException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    // removes the item from the back of the storage
+    private static void removeBack() {
+        try {
+            FoodItem removed = storage.removeBack();
+            System.out.println("Removed from back: " + removed);
+        } catch (StorageEmptyException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    // looks at the item at the front without removing it
+    private static void peekFront() {
+        try {
+            FoodItem item = storage.peekFront();
+            System.out.println("First item: " + item);
+        } catch (StorageEmptyException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    // searches for an item in storage by name
+    private static void search() {
+        System.out.print("Enter food name to search: ");
+        String name = scanner.nextLine().trim();
+        FoodItem item = storage.searchByName(name);
+
+        if (item != null) {
+            System.out.println("Found: " + item);
+        } else {
+            System.out.println("No item called \"" + name + "\" found.");
         }
     }
 }
