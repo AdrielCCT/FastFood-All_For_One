@@ -26,19 +26,19 @@ public class FoodStorageApp {
                     addItem(false); // add to back
                     break;
                 case "3":
-                    removeFront();
+                    removeFront(); //remove food from the front
                     break;
                 case "4":
-                    removeBack();
+                    removeBack(); //remove food from the back
                     break;
                 case "5":
-                    peekFront();
+                    peekFront(); //check the item without removing it
                     break;
                 case "6":
-                    search();
+                    search(); //search for a item by its name
                     break;
                 case "7":
-                    System.out.println("Option " + choice + " is not ready yet");
+                    showAllItems(); // display all items in storage
                     break;
                 case "0":
                     running = false;
@@ -140,5 +140,10 @@ public class FoodStorageApp {
         } else {
             System.out.println("No item called \"" + name + "\" found.");
         }
+    }
+
+    // displays all current items in storage
+    private static void showAllItems() {
+        storage.displayAll();
     }
 }
